@@ -1,10 +1,11 @@
 .chat {
   background-color: rgb(206, 183, 183);
   flex: 0.65;
+  display: flex;
+  flex-direction: column;
 }
 .chat__header {
   padding: 20px;
-  /* background-color: red; */
   display: flex;
   align-items: center;
   border-bottom: 1px solid lightgray;
@@ -13,4 +14,49 @@
 .chat__headerInfo {
   flex: 1;
   padding-left: 20px;
+}
+.chat__headerInfo > h3 {
+  margin-bottom: 3px;
+  font-weight: 500;
+}
+.chat__headerInfo > p {
+  color: gray;
+}
+
+.chat__message {
+  position: relative;
+  background-color: white;
+  font-size: 16px;
+  border-radius: 10px;
+  padding: 10px;
+  width: fit-content;
+  margin-bottom: 30px;
+}
+.chat__reciever {
+  margin-left: auto;
+  background-color: #dcf8c6;
+}
+.chat__name {
+  position: absolute;
+  top: -15px;
+  font-weight: 800;
+  font-size: x-small;
+}
+.chat__timestamp {
+  margin-left: 10px;
+  font-size: xx-small;
+}
+.chat__headerRight {
+  display: flex;
+  justify-content: space-between;
+  /* min-width: 100px; */
+}
+
+.chat__body {
+  flex: 1;
+  background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
+  background-position: repeat;
+  background-repeat: none;
+  padding: 30px;
+  overflow: scroll;
 }

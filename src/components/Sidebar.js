@@ -1,4 +1,3 @@
-import React from "react";
 import "../styles/Sidebar.css";
 import {
   Chat,
@@ -34,6 +33,8 @@ function Sidebar() {
         </div>
       </div>
       <div className="sidebar__chats">
+        <SidebarChat addNewChat/>
+        <SidebarChat/>
         <SidebarChat/>
         <SidebarChat/>
         <SidebarChat/>

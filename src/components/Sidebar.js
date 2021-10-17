@@ -6,10 +6,22 @@ import {
   SearchOutlined,
 } from "@mui/icons-material";
 import { Avatar, IconButton } from "@mui/material";
-import SidebarChat from '../components/SidebarChat';
-
+import SidebarChat from "../components/SidebarChat";
+import db from "../firebase";
+import { useEffect, useState } from "react";
 
 function Sidebar() {
+  const [rooms, setRooms] = useState([]);
+  useEffect(() => {
+    db.collection("rooms").onSnapshot((snapshot) =>
+      setRooms(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      )
+    );
+  }, []);
   return (
     <div className="sidebar">
       <div className="sidebar__header">
@@ -28,18 +40,15 @@ function Sidebar() {
       </div>
       <div className="sidebar__search">
         <div className="sidebar__searchContainer">
-        <SearchOutlined />
-        <input placeholder="Search or start new chat" type="text" />
+          <SearchOutlined />
+          <input placeholder="Search or start new chat" type="text" />
         </div>
       </div>
       <div className="sidebar__chats">
-        <SidebarChat addNewChat/>
-        <SidebarChat/>
-        <SidebarChat/>
-        <SidebarChat/>
-        <SidebarChat/>
-
-
+        <SidebarChat addNewChat />
+        {rooms.map((room) => (
+          <SidebarChat key={room.id} id={room.id} name={room.data.name} />
+        ))}
       </div>
     </div>
   );

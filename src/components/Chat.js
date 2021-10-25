@@ -57,7 +57,9 @@ function Chat() {
         <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
         <div className="chat__headerInfo">
           <h3>{roomName}</h3>
-          <p>Last seen on ...</p>
+          <p>{new Date(
+            messages[messages.length -1]?.timestamp?.toDate()
+          ).toUTCString()}</p>
         </div>
         <div className="chat__headerRight">
           <IconButton>
@@ -75,7 +77,9 @@ function Chat() {
         {messages.map((message) => (
           <p
             key={message.timestamp}
-            className={`chat__message ${true && "chat__reciever"} `}
+            className={`chat__message ${
+              message.name === user.displayName && "chat__reciever"
+            } `}
           >
             <span className="chat__name">{message.name}</span>
             {message.message}

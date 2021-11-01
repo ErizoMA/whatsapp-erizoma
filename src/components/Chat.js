@@ -11,7 +11,6 @@ import "../styles/Chat.css";
 import { useParams } from "react-router-dom";
 import db from "../firebase";
 import { useStateValue } from "../StateProvider";
-import firebase from "firebase/compat/app";
 
 function Chat() {
   const [input, setInput] = useState("");
@@ -22,31 +21,38 @@ function Chat() {
   const [{ user }, dispatch] = useStateValue();
 
   useEffect(() => {
-    if (roomId) {
-      db.collection("rooms")
-        .doc(roomId)
-        .onSnapshot((snapshot) => setRoomName(snapshot.data().name));
+    const rooms = db
+      .collection("rooms")
+      .doc(roomId)
+      .onSnapshot((snapshot) => setRoomName(snapshot.data().name));
 
-      db.collection("rooms")
-        .doc(roomId)
-        .collection("messages")
-        .orderBy("timestamp", "asc")
-        .onSnapshot((snapshot) =>
-          setMessages(snapshot.docs.map((doc) => doc.data()))
-        );
-    }
+    const messages = db
+      .collection("rooms")
+      .doc(roomId)
+      .collection("messages")
+      .orderBy("timestamp", "asc")
+      .onSnapshot((snapshot) =>
+        setMessages(snapshot.docs.map((doc) => doc.data()))
+      );
+
+    return () => {
+      rooms();
+      messages();
+    };
   }, [roomId]);
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000));
+    return () => {
+      setSeed("");
+    };
   }, [roomId]);
 
   const sendMessage = (e) => {
     e.preventDefault();
-    console.log("You typed >>>", input);
     db.collection("rooms").doc(roomId).collection("messages").add({
       message: input,
       name: user.displayName,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      timestamp: new Date(),
     });
     setInput("");
   };
@@ -57,9 +63,11 @@ function Chat() {
         <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
         <div className="chat__headerInfo">
           <h3>{roomName}</h3>
-          <p>{new Date(
-            messages[messages.length -1]?.timestamp?.toDate()
-          ).toUTCString()}</p>
+          <p>
+            {new Date(
+              messages[messages.length - 1]?.timestamp?.toDate()
+            ).toUTCString()}
+          </p>
         </div>
         <div className="chat__headerRight">
           <IconButton>

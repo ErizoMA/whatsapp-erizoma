@@ -3,14 +3,14 @@ import 'firebase/compat/firestore'
 import 'firebase/compat/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCaTwkU731GKDcizHThXjcOilhNeWIpyU4",
-  authDomain: "whatsapp-erizo.firebaseapp.com",
-  projectId: "whatsapp-erizo",
-  storageBucket: "whatsapp-erizo.appspot.com",
-  messagingSenderId: "590174878199",
-  appId: "1:590174878199:web:6291099af3d75a48e4d6f2",
-  measurementId: "G-PLE324S2C8"
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: "whatsapp-erizo-c2167.firebaseapp.com",
+  projectId: "whatsapp-erizo-c2167",
+  storageBucket: "whatsapp-erizo-c2167.appspot.com",
+  messagingSenderId: "430974958372",
+  appId: "1:430974958372:web:911f83a5db1d0dac5b51b1"
 };
+
 
 const firebaseApp = firebase.initializeApp(firebaseConfig)
 
